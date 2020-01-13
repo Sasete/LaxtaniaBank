@@ -71,6 +71,7 @@ def Update():
 
     
     print('Apps are updated...')
+    
 
     os.rmdir('./LaxtaniaBank-master')
     os.remove('LaxtaniaBank.zip')
