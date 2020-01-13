@@ -265,7 +265,7 @@ forgetPassButton.pack()
 
 
 
-host = "176.233.32.178"
+host = "176.88.47.17"
 port = 7676
 
 
