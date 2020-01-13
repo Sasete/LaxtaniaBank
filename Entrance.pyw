@@ -265,7 +265,7 @@ forgetPassButton.pack()
 
 
 
-host = "176.88.47.17"
+host = "laxtaniabank.ddns.net"
 port = 7676
 
 
