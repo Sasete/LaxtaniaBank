@@ -143,7 +143,7 @@ def BuyItem():
 
     AskServer(data)
 
-    Info('Success', 'Your request successfully sent to server. Please send player \'Laxtania\',' + str(cost) + 'g to get your request accepted.')
+    Info('Success', 'Your request successfully sent to server. Please send player \'Laxtania\',' + str(cost) + 'credits will be paid from your account.')
 
 
 
