@@ -1,0 +1,1 @@
+PureGoldOre,90,1

@@ -1,1 +1,1 @@
-GoldOre,6,6
+GoldOre,6,28

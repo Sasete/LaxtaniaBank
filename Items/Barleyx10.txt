@@ -1,1 +1,1 @@
-Barleyx10,4,8
+Barleyx10,4,0

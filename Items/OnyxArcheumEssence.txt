@@ -1,1 +1,1 @@
-OnyxArcheumEssence,30,0
+OnyxArcheumEssence,30,40

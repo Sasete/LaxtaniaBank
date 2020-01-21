@@ -1,1 +1,1 @@
-IronOrex10,6,50
+IronOrex10,6,231

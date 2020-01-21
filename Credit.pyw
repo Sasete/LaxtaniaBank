@@ -74,7 +74,7 @@ def BuyCredit():
 
     amount = int(dropVar.get().split(' ')[0].split('.')[0])
                  
-    valueOfCredit = int(95)
+    valueOfCredit = int(105)
     
     print(amount)
     
