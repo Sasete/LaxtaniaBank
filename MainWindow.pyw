@@ -98,6 +98,15 @@ def OpenMarket():
     Open('./Market.pyw')
     
 
+def OpenUsers():
+
+    data = user_info["Username"] + ',' + user_info["Balance"]
+
+    
+    CreateTempData(data)
+
+    Open('./Users.pyw')
+    
     
 def CreateTempData(data):
     
@@ -123,7 +132,6 @@ def CalculateRank(rank):
     
 
 
-
         
 main = tkinter.Tk()
 main.title("Laxtania")
@@ -138,9 +146,9 @@ menu.add_cascade(label = "Guild", menu = guildMenu)
 
 
 guildMenu.add_command(label = "Market", command = OpenMarket)
+guildMenu.add_command(label = "Send Credits", command = OpenUsers)
 guildMenu.add_separator()
 guildMenu.add_command(label = "Buy/Sell Credits", command = OpenCredit)
-
 
 
 accountMenu = tkinter.Menu(menu, tearoff = 0)
