@@ -73,9 +73,9 @@ def Update():
     print('Apps are updated...')
     
 
-    os.rmdir('./LaxtaniaBank-master')
-    os.remove('LaxtaniaBank.zip')
-
+    shutil.rmtree('./LaxtaniaBank-master', ignore_errors=True)
+    os.remove('./LaxtaniaBank.zip')
+    
     
     print('Unnecessary files cleared...')
 
