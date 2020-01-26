@@ -117,9 +117,15 @@ def AskServer(data):
 def SendCredit():
 
 
+    
+
     targetUser = str(userList.get(tkinter.ACTIVE)).split(' ')[2]
 
     amount = E_amount
+
+
+    if(int(amount.get()) <= 0):
+        return Error('Error', 'No amount given!')
 
     data = 'SendCredit/' + userInfo["Username"] + ',' + str(E_amount.get()) + ',' + targetUser
 
@@ -227,6 +233,17 @@ EntryField.pack(side = tkinter.TOP)
 
 sendButton = tkinter.Button(midFrame, bg = themeColor, fg = systemColor, text = "Send", font = 24, width = 10, height = 2, command = SendCredit)
 sendButton.pack(side = tkinter.BOTTOM)
+
+def sendtkinter(event):
+    SendCredit()
+
+main.bind('<Return>', sendtkinter)
+
+
+def refreshtkinter(event):
+    UpdateUserList()
+
+main.bind('r', refreshtkinter)
 
 
 exitButton = tkinter.Button(bot_sideFrame, bg = themeColor, fg = systemColor, text = "Exit", font = 24, width = 10, height = 2, command = Close)

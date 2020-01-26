@@ -157,6 +157,7 @@ main = tkinter.Tk()
 main.title("Laxtania")
 main.resizable(False,False)
 
+
 colorTheme = "gray"
 systemTheme = "black"
 userTheme = "white"
@@ -253,6 +254,14 @@ passwordEntry.pack()
 
 loginButton = tkinter.Button(midFrame, bg = colorTheme, fg = systemTheme, text = "Log in", width = 12, font = 1, command = LogIn)
 loginButton.pack()
+
+
+def loginTkinter(event):
+    LogIn()
+
+main.bind('<Return>', loginTkinter)
+
+
 
 
 signUpButton = tkinter.Button(midFrame, bg = colorTheme, fg = systemTheme, text = "Sign up", width = 12, font = 1, command = SignUp)

@@ -194,8 +194,7 @@ accountMenu = tkinter.Menu(menu, tearoff = 0)
 menu.add_cascade(label = "Account", menu = accountMenu)
 
 
-accountMenu.add_command(label = "Set Profile Picture")
-accountMenu.add_separator()
+
 accountMenu.add_command(label = "Change Username")
 accountMenu.add_command(label = "Change Password")
 accountMenu.add_command(label = "Change E-mail")
@@ -299,6 +298,12 @@ balanceLabel.pack()
 
 updateButton = tkinter.Button(bot_sideFrame, bg = themeColor, fg = "black", font = 18, text = 'Update', command = UpdatePage)
 updateButton.pack()
+
+def updatetkinter(event):
+    UpdatePage()
+
+main.bind('r', updatetkinter)
+
 
 
 host = "laxtaniabank.ddns.net"

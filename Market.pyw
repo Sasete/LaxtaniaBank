@@ -120,6 +120,10 @@ def AskServer(data):
     
 def SellItem():
 
+
+    if(int(E_amount.get()) <= 0):
+        return Error('Error', 'Amount can\'t be 0.')
+    
     data = 'SellItem/' + userData["Username"] + ',' + str(itemList.get(tkinter.ACTIVE)).split(' ')[2] + ',' + E_amount.get()
 
     # Get Item Name
@@ -133,6 +137,9 @@ def SellItem():
 
 
 def BuyItem():
+
+    if(int(E_amount.get()) <= 0):
+        return Error('Error', 'Amount can\'t be 0.')
     
     data = 'BuyItem/' + userData["Username"] + ',' + str(itemList.get(tkinter.ACTIVE)).split(' ')[2] + ',' + E_amount.get()
 
@@ -307,6 +314,18 @@ EntryField.pack(side = tkinter.TOP)
 
 sellButton = tkinter.Button(midFrame, bg = themeColor, fg = systemColor, text = "Sell", font = 24, width = 10, height = 2, command = SellItem)
 sellButton.pack(side = tkinter.BOTTOM)
+
+def selltkinter(event):
+    SellItem()
+
+def buytkinter(event):
+    BuyItem()
+
+
+main.bind('b', buytkinter)
+main.bind('s', selltkinter)
+    
+
 
 buyButton = tkinter.Button(midFrame, bg = themeColor, fg = systemColor, text = "Buy", font = 24, width = 10, height = 2, command = BuyItem)
 buyButton.pack(side = tkinter.BOTTOM)

@@ -165,7 +165,14 @@ buyButton.pack(fill = tkinter.X)
 sellButton = tkinter.Button(mainFrame, text = "Sell Credits", bg = themeColor, fg = systemColor, command = SellCredit)
 sellButton.pack(fill = tkinter.X)
 
+def buytkinter(event):
+    BuyCredit()
 
+def selltkinter(event):
+    SellCredit()
+
+main.bind('b', buytkinter)
+main.bind('s', selltkinter)
 
 
 

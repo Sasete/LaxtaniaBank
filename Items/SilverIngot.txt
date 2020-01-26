@@ -1,1 +1,1 @@
-SilverIngot,2,0
+SilverIngot,2,60

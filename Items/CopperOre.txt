@@ -1,1 +1,1 @@
-CopperOre,6,0
+CopperOre,6,57
