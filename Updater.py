@@ -2,7 +2,7 @@ import urllib.request
 import zipfile
 import shutil, os, glob
 from subprocess import Popen
-
+import sys
 
 
 
@@ -70,13 +70,17 @@ def Update():
     for f in filelist:
         shutil.move(f,'./')
 
-    
-    print('Apps are updated...')
 
     os.remove('./Updater2.py')
-    shutil.move('./LaxtaniaBank-master/Updater2.py', './')
+
     
-    Popen('py Updater2.py', shell = True)
+    shutil.move('./LaxtaniaBank-master/Updater2.py', './')
+
+    
+    print('Apps are updated...')
+    
+    
+    Popen('py Updater2.py')
 
 
     sys.exit(0)

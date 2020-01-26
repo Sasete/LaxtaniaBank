@@ -21,3 +21,5 @@ def Update():
     print('Unnecessary files cleared...')
 
 
+
+Update()
