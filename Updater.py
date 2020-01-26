@@ -1,6 +1,7 @@
 import urllib.request
 import zipfile
 import shutil, os, glob
+from subprocess import Popen
 
 
 
@@ -71,13 +72,14 @@ def Update():
 
     
     print('Apps are updated...')
-    
 
-    shutil.rmtree('./LaxtaniaBank-master', ignore_errors=True)
-    os.remove('./LaxtaniaBank.zip')
+    os.remove('./Updater2.py')
+    shutil.move('./LaxtaniaBank-master/Updater2.py', './')
     
-    
-    print('Unnecessary files cleared...')
+    Popen('py Updater2.py', shell = True)
+
+
+    sys.exit(0)
 
     # Gets files back and delete rest
 
