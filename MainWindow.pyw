@@ -4,7 +4,9 @@ from PIL import ImageTk, Image
 from subprocess import Popen
 import os
 import sys
+import socket
 import time
+
 
 
 
@@ -79,6 +81,43 @@ def GetTempDataUser():
 
 
 user_info = GetTempDataUser()
+
+
+def AskUserInfo(m_username):
+
+    message = 'UserInfo/' + str(m_username)
+    
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        s.connect((host,port))
+
+        
+        s.send( bytes(message, "utf-8") )
+
+
+        message = s.recv(bufferSize)
+
+
+        reply = format(message).split('\'')[1]
+    
+        print(reply)
+    
+        return reply
+
+    except:
+        return Error('Error Occured', 'Unkown error occured...')
+
+
+def UpdatePage():
+    
+    Open('./MainWindow.pyw')
+
+    newData = AskUserInfo(user_info["Username"])
+
+    CreateTempData(newData)
+        
+    sys.exit(0)
 
 
 def OpenCredit():
@@ -257,5 +296,17 @@ rankLabel.pack()
 
 balanceLabel = tkinter.Label(bot_sideFrame, bg = themeColor, fg = "black", font = 18, text = balance)
 balanceLabel.pack()
+
+updateButton = tkinter.Button(bot_sideFrame, bg = themeColor, fg = "black", font = 18, text = 'Update', command = UpdatePage)
+updateButton.pack()
+
+
+host = "laxtaniabank.ddns.net"
+port = 7676
+
+
+bufferSize = 1024
+
+
 
 tkinter.mainloop()

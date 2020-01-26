@@ -1,1 +1,1 @@
-GroundGrainx10,5,400
+GroundGrainx10,5,250

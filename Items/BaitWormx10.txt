@@ -1,1 +1,1 @@
-BaitWormx10,6,200
+BaitWormx10,6,0

@@ -1,0 +1,1 @@
+CopperIngot,25,0
