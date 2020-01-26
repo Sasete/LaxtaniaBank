@@ -6,10 +6,24 @@ import os
 import sys
 import socket
 import time
+import webbrowser
 
 
 
+urlCommerce = 'https://archeage.mokulu.io/trade-packs'
+urlItemBuilder = 'https://archeagecalculator.com/#'
 
+def OpenURL(url):
+    webbrowser.open(url, new=2)
+
+def OpenCommerce():
+    OpenURL(urlCommerce)
+
+def OpenItemBuilder():
+    OpenURL(urlItemBuilder)
+
+def OpenGearBuilder():
+    null
 
 
 def Open(path):
@@ -188,6 +202,16 @@ guildMenu.add_command(label = "Market", command = OpenMarket)
 guildMenu.add_command(label = "Send Credits", command = OpenUsers)
 guildMenu.add_separator()
 guildMenu.add_command(label = "Buy/Sell Credits", command = OpenCredit)
+
+
+toolsMenu = tkinter.Menu(menu, tearoff = 0)
+menu.add_cascade(label = "Tools", menu = toolsMenu)
+
+
+toolsMenu.add_command(label = "Trading Tool", command = OpenCommerce)
+toolsMenu.add_command(label = "Treasure Hunt Helper", command = OpenGearBuilder)
+toolsMenu.add_separator()
+toolsMenu.add_command(label = "Gear Builder", command = OpenItemBuilder)
 
 
 accountMenu = tkinter.Menu(menu, tearoff = 0)
