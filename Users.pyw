@@ -133,7 +133,7 @@ def SendCredit():
     AskServer(data)
 
 
-    Info('Success', 'Your credits successfully sent to player. Plase don\'t forget to get your service from him/her. ;)')
+    Info('Success', 'Your laxi successfully sent to player. Plase don\'t forget to get your service from him/her. ;)')
 
 
 

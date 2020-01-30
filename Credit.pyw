@@ -155,7 +155,7 @@ mainFrame.pack(side = tkinter.TOP, fill = tkinter.X)
 dropVar = tkinter.StringVar()
 dropVar.set("1.000 Credits")
 
-dropDown = tkinter.OptionMenu(topFrame, dropVar, '1.000 Credits', '2.000 Credits', '3.000 Credits', '4.000 Credits', '5.000 Credits', '6.000 Credits', '7.000 Credits', '8.000 Credits', '9.000 Credits', '10.000 Credits')
+dropDown = tkinter.OptionMenu(topFrame, dropVar, '1.000 Laxi', '2.000 Laxi', '3.000 Laxi', '4.000 Laxi', '5.000 Laxi', '6.000 Laxi', '7.000 Laxi', '8.000 Laxi', '9.000 Laxi', '10.000 Laxi')
 dropDown.config(bg = themeColor, activebackground = themeColor, fg = systemColor)
 dropDown.pack()
 

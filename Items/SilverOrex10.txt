@@ -1,1 +1,1 @@
-SilverOrex10,9,15
+SilverOrex10,9,0

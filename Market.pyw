@@ -150,7 +150,7 @@ def BuyItem():
 
     AskServer(data)
 
-    Info('Success', 'Your request successfully sent to server. Please send player \'Laxtania\',' + str(cost) + 'credits will be paid from your account.')
+    Info('Success', 'Your request successfully sent to server. ' + str(cost) + 'laxi will be paid from your account.')
 
 
 
@@ -211,7 +211,7 @@ def UpdateItemList():
         itemData["Price"] = ItemInfos[1]
         itemData["Amount"] = ItemInfos[2]
 
-        ListItem = str(order) + ')  ' + itemData["ItemName"]  + '  Price : ' + itemData["Price"] + ' credits  Amount : ' + itemData["Amount"] 
+        ListItem = str(order) + ')  ' + itemData["ItemName"]  + '  Price : ' + itemData["Price"] + ' laxi  Amount : ' + itemData["Amount"] 
         
         itemList.insert(tkinter.END, ListItem)
 

@@ -199,9 +199,9 @@ menu.add_cascade(label = "Guild", menu = guildMenu)
 
 
 guildMenu.add_command(label = "Market", command = OpenMarket)
-guildMenu.add_command(label = "Send Credits", command = OpenUsers)
+guildMenu.add_command(label = "Send Laxi\'s", command = OpenUsers)
 guildMenu.add_separator()
-guildMenu.add_command(label = "Buy/Sell Credits", command = OpenCredit)
+guildMenu.add_command(label = "Buy/Sell Laxi", command = OpenCredit)
 
 
 toolsMenu = tkinter.Menu(menu, tearoff = 0)

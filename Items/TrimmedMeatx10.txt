@@ -1,1 +1,1 @@
-TrimmedMeatx10,3,0
+TrimmedMeatx10,3,100
