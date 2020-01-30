@@ -153,16 +153,16 @@ mainFrame = tkinter.Frame(main, bg = themeColor, width = 300, height = 200)
 mainFrame.pack(side = tkinter.TOP, fill = tkinter.X)
 
 dropVar = tkinter.StringVar()
-dropVar.set("1.000 Credits")
+dropVar.set("1.000 Laxi")
 
 dropDown = tkinter.OptionMenu(topFrame, dropVar, '1.000 Laxi', '2.000 Laxi', '3.000 Laxi', '4.000 Laxi', '5.000 Laxi', '6.000 Laxi', '7.000 Laxi', '8.000 Laxi', '9.000 Laxi', '10.000 Laxi')
 dropDown.config(bg = themeColor, activebackground = themeColor, fg = systemColor)
 dropDown.pack()
 
-buyButton = tkinter.Button(mainFrame, text = "Buy Credits", bg = themeColor, fg = systemColor, command = BuyCredit)
+buyButton = tkinter.Button(mainFrame, text = "Buy Laxi", bg = themeColor, fg = systemColor, command = BuyCredit)
 buyButton.pack(fill = tkinter.X)
 
-sellButton = tkinter.Button(mainFrame, text = "Sell Credits", bg = themeColor, fg = systemColor, command = SellCredit)
+sellButton = tkinter.Button(mainFrame, text = "Sell Laxi", bg = themeColor, fg = systemColor, command = SellCredit)
 sellButton.pack(fill = tkinter.X)
 
 def buytkinter(event):
