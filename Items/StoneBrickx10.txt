@@ -1,1 +1,1 @@
-StoneBrickx10,5,182
+StoneBrickx10,5,0

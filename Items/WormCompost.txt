@@ -1,1 +1,1 @@
-WormCompost,5,100
+WormCompost,5,0

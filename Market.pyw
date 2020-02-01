@@ -211,7 +211,7 @@ def UpdateItemList():
         itemData["Price"] = ItemInfos[1]
         itemData["Amount"] = ItemInfos[2]
 
-        ListItem = str(order) + ')  ' + itemData["ItemName"]  + '  Price : ' + itemData["Price"] + ' laxi  Amount : ' + itemData["Amount"] 
+        ListItem = str(order) + ')  ' + itemData["ItemName"]  + '  Price : ' + itemData["Price"] + ' £  Amount : ' + itemData["Amount"] 
         
         itemList.insert(tkinter.END, ListItem)
 
