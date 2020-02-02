@@ -12,6 +12,7 @@ import webbrowser
 
 urlCommerce = 'https://archeage.mokulu.io/trade-packs'
 urlItemBuilder = 'https://archeagecalculator.com/#'
+urlCargoShip = 'http://aau-cargo.com/Halnaak/actual'
 
 def OpenURL(url):
     webbrowser.open(url, new=2)
@@ -22,8 +23,8 @@ def OpenCommerce():
 def OpenItemBuilder():
     OpenURL(urlItemBuilder)
 
-def OpenGearBuilder():
-    null
+def OpenCargoShipTracker():
+    OpenURL(urlCargoShip)
 
 
 def Open(path):
@@ -209,7 +210,8 @@ menu.add_cascade(label = "Tools", menu = toolsMenu)
 
 
 toolsMenu.add_command(label = "Trading Tool", command = OpenCommerce)
-toolsMenu.add_command(label = "Treasure Hunt Helper", command = OpenGearBuilder)
+toolsMenu.add_command(label = "Cargo Ship Tracker", command = OpenCargoShipTracker)
+toolsMenu.add_command(label = "Treasure Hunt Helper")
 toolsMenu.add_separator()
 toolsMenu.add_command(label = "Gear Builder", command = OpenItemBuilder)
 

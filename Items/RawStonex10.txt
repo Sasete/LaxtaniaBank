@@ -1,1 +1,1 @@
-RawStonex10,1,1163
+RawStonex10,1,0
