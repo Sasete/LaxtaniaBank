@@ -8,6 +8,70 @@ import smtplib
 import os
 import sys
 from datetime import datetime
+import socket
+
+
+
+
+host = "laxtaniabank.ddns.net"
+port = 7676
+
+
+bufferSize = 1024
+
+
+
+def Error(errTitle, errString):
+    messagebox.showerror(errTitle, errString)
+
+
+def Info(errTitle, errString):
+    messagebox.showinfo(errTitle, errString)
+
+    
+def AskServer(data):
+
+    message = data
+    
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        s.connect((host,port))
+    
+        s.send( bytes(message, "utf-8") )
+
+
+
+        message = s.recv(bufferSize)
+
+
+
+        reply = format(message).split('\'')[1]
+
+
+    
+        print(reply)
+    
+        return reply
+
+    except:
+        return Error('Error Occured', 'Unkown error occured...')
+
+
+def GetTempData():
+
+    path = './'
+
+    fileName = 'temp.txt'
+
+    
+    ReadFile(path, fileName)
+    
+    DeleteFile(path, fileName)
+
+    return 1
+
+
 
 
 def Open(path):
@@ -61,11 +125,11 @@ def WriteFile(m_path, m_fileName, m_data):
 
 def Details():
 
-    path = './Wishes/'
+    path = 'Wishes'
 
-    fileName = str(wishList.get(tkinter.ACTIVE).split(' ')[2]) + '.txt'
+    fileName = str(wishList.get(tkinter.ACTIVE).split(' ')[2])
 
-    newInfo = ReadFile(path, fileName)
+    newInfo = AskServer('Details/' + path + ',' + fileName)
 
     CreateTempData(newInfo)
 
@@ -92,123 +156,34 @@ def GetGuildGold():
 
 def Confirm():
 
-    path = './Wishes/'
+    
+    fileName = str(wishList.get(tkinter.ACTIVE).split(' ')[2])
 
-    fileName = str(wishList.get(tkinter.ACTIVE).split(' ')[2]) + '.txt'
+    response = AskServer('ConfirmWish/' + fileName)
 
-    newInfos = ReadFile(path, fileName).split(',')
-
-    wishData = {}
-
-    wishData["Username"] = newInfos[0]
-    wishData["Type"] = newInfos[1]
-    wishData["Amount"] = newInfos[2].split(' ')[0].split('.')[0]
-
-
-
-    if(wishData["Type"] == 'sell'):
-
-        path = './'
-        fileName = 'Gold.txt'
-
-        goldInfo = ReadFile(path, fileName)
-
-        cost = int(wishData["Amount"]) * int(95)
-
-        if(int(goldInfo) < cost):
-            print('rejected, not enough gold in bank')
-            return Reject()
-
-        path = './Users/'
-        fileName = wishData["Username"] + '.txt'
-
-        newInfo = ReadFile(path, fileName).split(',')
-
-        userData = {}
-
-        userData["Username"] = newInfo[0]
-        userData["Password"] = newInfo[1]
-        userData["Email"] = newInfo[2]
-        userData["GM"] = newInfo[3]
-        userData["Rank"] = newInfo[4]
-        userData["Balance"] = newInfo[5]
-
-        newRank =  int(userData["Rank"]) #+ (int(wishData["Amount"]))
-
-        newBalance = int(userData["Balance"]) - (int(wishData["Amount"]) * 1000)
-
-        newInfo = userData["Username"] + ',' + userData["Password"]  + ',' + userData["Email"] + ',' + userData["GM"] + ',' + str(newRank) + ',' + str(newBalance)
-
-        WriteFile(path, fileName, newInfo)
-
+    if(response == 'Success'):
         
+        UpdateWishList()
 
-        newInfo = str(int(goldInfo) - ((int(wishData["Amount"])) * 95))
+        return 1
 
-        path = './'
-        fileName = 'Gold.txt'
+    else:
 
-        WriteFile(path, fileName, newInfo)
+        message = response.split(',')
 
+        Error(message[0], message[1])
+
+        return 0
         
-
-    if(wishData["Type"] == 'buy'):
-        
-        path = './Users/'
-        fileName = wishData["Username"] + '.txt'
-
-        newInfo = ReadFile(path, fileName).split(',')
-
-        userData = {}
-
-        userData["Username"] = newInfo[0]
-        userData["Password"] = newInfo[1]
-        userData["Email"] = newInfo[2]
-        userData["GM"] = newInfo[3]
-        userData["Rank"] = newInfo[4]
-        userData["Balance"] = newInfo[5]
-
-        newRank = int(userData["Rank"]) #+ (int(wishData["Amount"]))
-
-        newBalance = int(userData["Balance"]) + (int(wishData["Amount"]) * 1000)
-
-        newInfo = userData["Username"] + ',' + userData["Password"]  + ',' + userData["Email"] + ',' + userData["GM"] + ',' + str(newRank) + ',' + str(newBalance)
-
-        WriteFile(path, fileName, newInfo)
-
-        path = './'
-        fileName = 'Gold.txt'
-
-        goldInfo = ReadFile(path, fileName)
-
-        newInfo = str(int(goldInfo) + ((int(wishData["Amount"])) * 105))
-
-        WriteFile(path, fileName, newInfo)
-
-    path = './Wishes/'
-    fileName = str(wishList.get(tkinter.ACTIVE).split(' ')[2]) + '.txt'
-
-    DeleteFile(path, fileName)
-
-    UpdateWishList()
-
-    logInfo = 'Wish confirmed: ' + wishData + ' new Guild Gold is: ' + GetGuildGold()
-
-    LOG(logInfo)
 
     
 
 def Reject():
     
-    path = './Wishes/'
+    
+    fileName = str(wishList.get(tkinter.ACTIVE).split(' ')[2])
 
-    fileName = str(wishList.get(tkinter.ACTIVE).split(' ')[2]) + '.txt'
-
-    logInfo = 'Wish rejected! ' + ReadFile(path, fileName)
-
-    LOG(logInfo)
-
-    DeleteFile(path, fileName)
+    AskServer('RejectWish/' + fileName)
 
     UpdateWishList()
 
@@ -217,41 +192,43 @@ def Reject():
 
 def UpdateWishList():
     
-    path = './Wishes/'
-
-    files = []
+    wishes = AskServer('AskWishes/').split(';')
 
     
 
-    for r,d,f in os.walk(path):
-        for file in f:
-            if '.txt' in file:
-                files.append(os.path.join(r, file))
+    if(wishes[0] == 'Empty'):
+        
+        wishList.delete(0, tkinter.END)
+        
+        return 0
+
+    else:
 
 
-    wishList.delete(0, tkinter.END)
+        wishList.delete(0, tkinter.END)
                 
-    order = 1
-    for file in files:
+        order = 1
+        for wish in wishes:
 
-        fileName = str(file).split('.')[1].split('/')[2] + '.txt'
+            wishInfos = wish.split(',')
 
-        wishInfos = ReadFile(path, fileName).split(',')
+            
+            wishData = {}
 
-        wishData = {}
+            wishData["Username"] = wishInfos[0]
+            wishData["Type"] = wishInfos[1]
+            wishData["Amount"] = wishInfos[2]
+            fileName = wishInfos[3]
 
-        wishData["Username"] = wishInfos[0]
-        wishData["Type"] = wishInfos[1]
-        wishData["Amount"] = wishInfos[2]
-
-        ListItem = str(order) + ')  ' + fileName.split('.')[0]
+            ListItem = str(order) + ')  ' + fileName.split('.')[0]
         
-        wishList.insert(tkinter.END, ListItem)
+            wishList.insert(tkinter.END, ListItem)
 
-        order += 1
+            order += 1
+
         
 
-
+GetTempData()
        
 main = tkinter.Tk()
 main.title("Wish List")

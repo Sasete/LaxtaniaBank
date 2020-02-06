@@ -5,6 +5,70 @@ from PIL import ImageTk, Image
 import os
 import sys
 from datetime import datetime
+import socket
+
+
+
+
+host = "laxtaniabank.ddns.net"
+port = 7676
+
+
+bufferSize = 1024
+
+
+
+def Error(errTitle, errString):
+    messagebox.showerror(errTitle, errString)
+
+
+def Info(errTitle, errString):
+    messagebox.showinfo(errTitle, errString)
+
+    
+def AskServer(data):
+
+    message = data
+    
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        s.connect((host,port))
+    
+        s.send( bytes(message, "utf-8") )
+
+
+
+        message = s.recv(bufferSize)
+
+
+
+        reply = format(message).split('\'')[1]
+
+
+    
+        print(reply)
+    
+        return reply
+
+    except:
+        return Error('Error Occured', 'Unkown error occured...')
+
+
+def GetTempData():
+
+    path = './'
+
+    fileName = 'temp.txt'
+
+    
+    ReadFile(path, fileName)
+    
+    DeleteFile(path, fileName)
+
+    return 1
+
+
 
 
 def Open(path):
@@ -63,11 +127,11 @@ def WriteFile(m_path, m_fileName, m_data):
 
 def Details():
 
-    path = './Requests/'
+    path = 'Requests'
 
-    fileName = str(requestList.get(tkinter.ACTIVE).split(' ')[2]) + '.txt'
+    fileName = str(requestList.get(tkinter.ACTIVE).split(' ')[2])
 
-    newInfo = ReadFile(path, fileName)
+    newInfo = AskServer('Details/' + path + ',' + fileName)
 
     CreateTempData(newInfo)
 
@@ -101,145 +165,33 @@ def GetItemInfo(m_itemname):
 
 def Confirm():
     
-    path = './Requests/'
-    fileName = str(requestList.get(tkinter.ACTIVE).split(' ')[2]) + '.txt'
+    
+    fileName = str(requestList.get(tkinter.ACTIVE).split(' ')[2])
 
-    newInfo = ReadFile(path, fileName).split(',')
+    response = AskServer('ConfirmRequest/' + fileName)
 
-    requestData = {}
+    
+    if(response == 'Success'):
 
+        UpdateRequestList()
 
-    requestData["Username"] = newInfo[0]
-    requestData["Type"] = newInfo[1]
-    requestData["ItemName"] = newInfo[2]
-    requestData["Amount"] = newInfo[3]
+        return 1
 
+    else:
 
-    if(str(requestData["Type"]) == 'sell'):
+        message = response.split(',')
 
+        Error(message[0], message[1])
 
-        path = './Items/'
-        fileName = requestData["ItemName"] + '.txt'
-
-        newInfo = ReadFile(path, fileName).split(',')
-
-        itemData = {}
-
-        itemData["ItemName"] = newInfo[0]
-        itemData["Price"] = newInfo[1]
-        itemData["Amount"] = newInfo[2]
-
-        newAmount = int(itemData["Amount"]) + int(requestData["Amount"])
-
-        newInfo = itemData["ItemName"] + ',' + itemData["Price"] + ',' + str(newAmount)
-
-        WriteFile(path, fileName, newInfo)
-
-        path = './Users/'
-        fileName = requestData["Username"] + '.txt'
-
-
-        newInfo = ReadFile(path, fileName).split(',')
-
-        userData = {}
-
-        userData["Username"] = newInfo[0]
-        userData["Password"] = newInfo[1]
-        userData["Email"] = newInfo[2]
-        userData["GM"] = newInfo[3]
-        userData["Rank"] = newInfo[4]
-        userData["Balance"] = newInfo[5]
-
-        newRank =  int(userData["Rank"]) #+ int(requestData["Amount"]) 
-
-        newBalance = int(userData["Balance"]) + ( int(requestData["Amount"]) * int(itemData["Price"]))
-
-        newInfo = userData["Username"] + ',' + userData["Password"]  + ',' + userData["Email"] + ',' + userData["GM"] + ',' + str(newRank) + ',' + str(newBalance)
-
-        WriteFile(path, fileName, newInfo)
-
-
-    if(str(requestData["Type"]) == 'buy'):
-
-        itemAmount = int(GetItemInfo(requestData["ItemName"]).split(',')[2])
-
-        if(itemAmount < int(requestData["Amount"])):
-            Error('Rejected', 'Bank doesn\'t has enough stock.')
-            print('rejected, no stock.')
-            return Reject()
-
-        userBalance = int(GetUserInfo(requestData["Username"]).split(',')[5])
-        cost = int(requestData["Amount"]) * int(GetItemInfo(requestData["ItemName"]).split(',')[1])
-
-        if(cost > userBalance):
-            Error('Rejected', 'User doesn''t have enough credits.')
-            print('rejected, not enough credits')
-            return Reject()
-
-        path = './Items/'
-        fileName = requestData["ItemName"] + '.txt'
-
-        newInfo = ReadFile(path, fileName).split(',')
-
-        itemData = {}
-
-        itemData["ItemName"] = newInfo[0]
-        itemData["Price"] = newInfo[1]
-        itemData["Amount"] = newInfo[2]
-
-        newAmount = int(itemData["Amount"]) - int(requestData["Amount"])
-
-        newInfo = itemData["ItemName"] + ',' + itemData["Price"] + ',' + str(newAmount)
-
-        WriteFile(path, fileName, newInfo)
-
-        path = './Users/'
-        fileName = requestData["Username"] + '.txt'
-
-
-        newInfo = ReadFile(path, fileName).split(',')
-
-        userData = {}
-
-        userData["Username"] = newInfo[0]
-        userData["Password"] = newInfo[1]
-        userData["Email"] = newInfo[2]
-        userData["GM"] = newInfo[3]
-        userData["Rank"] = newInfo[4]
-        userData["Balance"] = newInfo[5]
-
-        newRank =  int(userData["Rank"]) #+ int(requestData["Amount"]) 
-
-        newBalance = int(userData["Balance"]) - ( int(requestData["Amount"]) * int(itemData["Price"]))
-
-        newInfo = userData["Username"] + ',' + userData["Password"]  + ',' + userData["Email"] + ',' + userData["GM"] + ',' + str(newRank)+ ',' + str(newBalance)
-
-        WriteFile(path, fileName, newInfo)
-
-    path = './Requests/'
-    fileName = str(requestList.get(tkinter.ACTIVE).split(' ')[2]) + '.txt'
-
-
-    DeleteFile(path, fileName)
-
-    UpdateRequestList()
-
-    logInfo = 'Request confirmed: ' + RequestData
-
-    LOG(logInfo)
+        return 0
     
 
 def Reject():
     
-    path = './Requests/'
 
-    fileName = str(requestList.get(tkinter.ACTIVE).split(' ')[2]) + '.txt'
+    fileName = str(requestList.get(tkinter.ACTIVE).split(' ')[2])
 
-    logInfo = 'Request rejected: ' + ReadFile(path, fileName)
-
-    LOG(logInfo)
-
-    DeleteFile(path, fileName)
+    AskServer('RejectRequest/' + fileName)
 
     UpdateRequestList()
 
@@ -247,42 +199,42 @@ def Reject():
 
 def UpdateRequestList():
     
-    path = './Requests/'
+    requests = AskServer('AskRequests/').split(';')
 
-    files = []
+    if(requests == 'Empty'):
 
-    
+        requestList.delete(0 , tkinter.END)
 
-    for r,d,f in os.walk(path):
-        for file in f:
-            if '.txt' in file:
-                files.append(os.path.join(r, file))
+        return 0
+
+    else:
 
 
-    requestList.delete(0, tkinter.END)
+        requestList.delete(0, tkinter.END)
                 
-    order = 1
-    for file in files:
+        order = 1
+        for request in requests:
 
-        fileName = str(file).split('.')[1].split('/')[2] + '.txt'
+           
 
-        requestInfos = ReadFile(path, fileName).split(',')
+            requestInfos = request.split(',')
 
-        requestData = {}
+            requestData = {}
 
-        requestData["Username"] = requestInfos[0]
-        requestData["Type"] = requestInfos[1]
-        requestData["ItemName"] = requestInfos[2]
-        requestData["Amount"] = requestInfos[3]
+            requestData["Username"] = requestInfos[0]
+            requestData["Type"] = requestInfos[1]
+            requestData["ItemName"] = requestInfos[2]
+            requestData["Amount"] = requestInfos[3]
+            fileName = requestInfos[4]
 
-        ListItem = str(order) + ')  ' + fileName.split('.')[0]
+            ListItem = str(order) + ')  ' + fileName.split('.')[0]
         
-        requestList.insert(tkinter.END, ListItem)
+            requestList.insert(tkinter.END, ListItem)
 
-        order += 1
+            order += 1
         
 
-
+GetTempData()
        
 main = tkinter.Tk()
 main.title("Request List")
