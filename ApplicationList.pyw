@@ -8,6 +8,69 @@ import smtplib
 import os
 import sys
 from datetime import datetime
+import socket
+
+
+
+
+host = "laxtaniabank.ddns.net"
+port = 7676
+
+
+bufferSize = 1024
+
+
+
+def Error(errTitle, errString):
+    messagebox.showerror(errTitle, errString)
+
+
+def Info(errTitle, errString):
+    messagebox.showinfo(errTitle, errString)
+
+    
+def AskServer(data):
+
+    message = data
+    
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        s.connect((host,port))
+    
+        s.send( bytes(message, "utf-8") )
+
+
+
+        message = s.recv(bufferSize)
+
+
+
+        reply = format(message).split('\'')[1]
+
+
+    
+        print(reply)
+    
+        return reply
+
+    except:
+        return Error('Error Occured', 'Unkown error occured...')
+
+
+def GetTempData():
+
+    path = './'
+
+    fileName = 'temp.txt'
+
+    
+    ReadFile(path, fileName)
+    
+    DeleteFile(path, fileName)
+
+    return 1
+
 
 
 def Open(path):
@@ -61,15 +124,16 @@ def WriteFile(m_path, m_fileName, m_data):
 
 def Details():
 
-    path = './Applications/'
+    path = 'Applications'
 
-    fileName = str(applicationList.get(tkinter.ACTIVE).split(' ')[2]) + '.txt'
+    fileName = str(applicationList.get(tkinter.ACTIVE).split(' ')[2])
 
-    newInfo = ReadFile(path, fileName)
+    newInfo = AskServer('Details/' + path + ',' + fileName)
 
     CreateTempData(newInfo)
 
     Open('./ApplicationDetails.pyw')
+    
 
 def LOG(m_input):
     info = ReadFile('./', 'Log.txt')
@@ -82,47 +146,15 @@ def LOG(m_input):
 
 def Confirm():
 
-    path = './Applications/'
-    fileName = str(applicationList.get(tkinter.ACTIVE).split(' ')[2]) + '.txt'
+    fileName = str(applicationList.get(tkinter.ACTIVE).split(' ')[2])
 
-    newInfo = ReadFile(path, fileName).split(',')
-    
-    applicationData = {}
+   
 
-    applicationData["Username"] = newInfo[0]
-    applicationData["Password"] = newInfo[1]
-    applicationData["Email"] = newInfo[2]
-      
-    path = './Users/'
-    
-    CreateFile(path, fileName)
+    AskServer('ConfirmApplication/' + fileName)
 
-    newData = applicationData["Username"] + ',' +applicationData["Password"] + ',' + applicationData["Email"] + ',' + '0' + ',' + '0' + ',' + '0'
-
-    WriteFile(path, fileName, newData)
-
-    msg = MIMEMultipart()
-    
-    msg["From"] = "laxialaxtania@gmail.com"
-
-    msg["To"] = applicationData["Email"]
-        
-    msg["Subject"] = "Sign Up Request"
-
-
-    body = "Your signation has completed! Thank you for joining us!"
-    #server.sendmail("laxialaxtania@gmail.com",GetUserMail(m_username),msg)
-
-    logInfo = 'New user added: ' + newData
-
-    LOG(logInfo)
-
-    SendMail(msg, str(body))
-
-    path = './Applications/'
-    DeleteFile(path, fileName)
 
     UpdateApplicationList()
+    
         
 def SendMail(message, body):
 
@@ -155,54 +187,48 @@ def SendMail(message, body):
 
 def Reject():
     
-    path = './Applications/'
+    fileName = str(applicationList.get(tkinter.ACTIVE).split(' ')[2])
 
-    fileName = str(applicationList.get(tkinter.ACTIVE).split(' ')[2]) + '.txt'
-
-    DeleteFile(path, fileName)
+    AskServer('RejectApplication/' + fileName)
 
     UpdateApplicationList()
-
-    logInfo = 'Application rejected!' + fileName
-
-    LOG(logInfo)
+    
 
 def UpdateApplicationList():
     
-    path = './Applications/'
-
-    files = []
+    applications = AskServer('AskApplications/').split(';')
 
     
 
-    for r,d,f in os.walk(path):
-        for file in f:
-            if '.txt' in file:
-                files.append(os.path.join(r, file))
+    if(applications[0] == 'Empty'):
+        applicationList.delete(0, tkinter.END)
+        return 0
 
+    else:
 
-    applicationList.delete(0, tkinter.END)
+        applicationList.delete(0, tkinter.END)
                 
-    order = 1
-    for file in files:
+        order = 1
+        for application in applications:
 
-        fileName = str(file).split('.')[1].split('/')[2] + '.txt'
 
-        applicationInfos = ReadFile(path, fileName).split(',')
+            applicationInfos = application.split(',')
 
-        applicationData = {}
+            applicationData = {}
 
-        applicationData["Username"] = applicationInfos[0]
-        applicationData["Password"] = applicationInfos[1]
-        applicationData["Email"] = applicationInfos[2]
+            applicationData["Username"] = applicationInfos[0]
+            applicationData["Password"] = applicationInfos[1]
+            applicationData["Email"] = applicationInfos[2]
 
-        ListItem = str(order) + ')  ' + applicationData["Username"]
+            ListItem = str(order) + ')  ' + applicationData["Username"]
         
-        applicationList.insert(tkinter.END, ListItem)
+            applicationList.insert(tkinter.END, ListItem)
 
-        order += 1
+            order += 1
         
 
+
+#GetTempData()
 
        
 main = tkinter.Tk()
