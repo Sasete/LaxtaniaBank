@@ -5,6 +5,55 @@ from PIL import ImageTk, Image
 import os
 import sys
 from datetime import datetime
+import socket
+
+
+
+
+host = "laxtaniabank.ddns.net"
+port = 7676
+
+
+bufferSize = 1024
+
+
+
+def Error(errTitle, errString):
+    messagebox.showerror(errTitle, errString)
+
+
+def Info(errTitle, errString):
+    messagebox.showinfo(errTitle, errString)
+
+    
+def AskServer(data):
+
+    message = data
+    
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        s.connect((host,port))
+    
+        s.send( bytes(message, "utf-8") )
+
+
+
+        message = s.recv(bufferSize)
+
+
+
+        reply = format(message).split('\'')[1]
+
+
+    
+        print(reply)
+    
+        return reply
+
+    except:
+        return Error('Error Occured', 'Unkown error occured...')
+
 
 
 
@@ -71,35 +120,31 @@ def GetTempData():
 
 def SetPrice():
 
-    path = './Items/'
+    path = 'Items'
 
-    fileName = itemData["ItemName"] + '.txt'
+    fileName = itemData["ItemName"]
     
     newPrice = str(EntryField.get())
 
     newInfo = itemData["ItemName"] + ',' + newPrice + ',' + itemData["Amount"]
     
-    WriteFile(path, fileName, newInfo)
+    AskServer('WriteFile/' + path + ';' + fileName + ';' + newInfo)
 
-    logInfo = 'Price of ' + itemData["ItemName"] + ' set to ' + newPrice + ';' + newInfo
-
-    LOG(logInfo)
+    
 
 def SetAmount():
     
-    path = './Items/'
+    path = 'Items'
 
-    fileName = itemData["ItemName"] + '.txt'
+    fileName = itemData["ItemName"]
     
     newAmount = str(EntryField.get())
 
     newInfo = itemData["ItemName"] + ',' + itemData["Price"] + ',' + newAmount
     
-    WriteFile(path, fileName, newInfo)
+    AskServer('WriteFile/' + path + ';' + fileName + ';' + newInfo)
 
-    logInfo = 'Amount of ' + itemData["ItemName"] + ' set to ' + newAmount + ';' + newInfo
-
-    LOG(logInfo)
+    
 
 
 
