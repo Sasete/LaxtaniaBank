@@ -53,6 +53,12 @@ def AskServer(data):
     except:
         return Error('Error Occured', 'Unkown error occured...')
 
+
+def CreateTempData(data):
+    
+    CreateFile('./','temp.txt')
+        
+    WriteFile('./','temp.txt', data)
     
 
 def Open(path):
@@ -101,9 +107,20 @@ def CreateTempData(data):
         
     WriteFile('./','temp.txt', data)
     
+def GetTempData():
 
+    path = './'
+
+    fileName = 'temp.txt'
+
+
+    ReadFile(path, fileName)
+
+    return 1
 
 def Details():
+
+    CreateTempData('Admin')
 
     path = 'Users'
     
@@ -135,7 +152,7 @@ def UpdateUserList():
         order += 1
         
 
-
+GetTempData()
         
 main = tkinter.Tk()
 main.title("Userlist")
