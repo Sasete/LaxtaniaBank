@@ -125,15 +125,16 @@ def SetRank():
     AskServer('SetRank/' + userData["Username"] + ';' + newInfo + ';' + logInfo)
 
 def SetBalance():
-
     
     newBalance = str(EntryField.get())
 
     newInfo = userData["Username"] + ',' + userData["Password"] + ',' + userData["Email"] + ',' + userData["GM"] + ',' + userData["Rank"] + ',' + newBalance
 
-    logInfo = 'Balance of ' + userData["Username"] + ' set to ' + newRank + '; ' + newInfo
+    logInfo = 'Balance of ' + userData["Username"] + ' set to ' + userData["Rank"] + '; ' + newInfo
     
     AskServer('SetBalance/' + userData["Username"] + ';' + newInfo + ';' +logInfo)
+
+
 
 
 userData = GetTempData()
