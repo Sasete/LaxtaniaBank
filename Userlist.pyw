@@ -87,6 +87,10 @@ def CreateFile(m_path, m_fileName):
 
     return
 
+# This function deletes file
+def DeleteFile(m_path, m_fileName):
+    
+    os.remove(m_path + m_fileName)
 
 # This function writes into file with deleting previously info
 def WriteFile(m_path, m_fileName, m_data):
@@ -113,8 +117,11 @@ def GetTempData():
 
     fileName = 'temp.txt'
 
+    
 
     ReadFile(path, fileName)
+    
+    DeleteFile(path, fileName)
 
     return 1
 

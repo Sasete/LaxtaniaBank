@@ -5,8 +5,68 @@ from PIL import ImageTk, Image
 import os
 import sys
 from datetime import datetime
+import socket
 
 
+
+
+host = "laxtaniabank.ddns.net"
+port = 7676
+
+
+bufferSize = 1024
+
+
+
+def Error(errTitle, errString):
+    messagebox.showerror(errTitle, errString)
+
+
+def Info(errTitle, errString):
+    messagebox.showinfo(errTitle, errString)
+
+    
+def AskServer(data):
+
+    message = data
+    
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        s.connect((host,port))
+    
+        s.send( bytes(message, "utf-8") )
+
+
+
+        message = s.recv(bufferSize)
+
+
+
+        reply = format(message).split('\'')[1]
+
+
+    
+        print(reply)
+    
+        return reply
+
+    except:
+        return Error('Error Occured', 'Unkown error occured...')
+
+
+def GetTempData():
+
+    path = './'
+
+    fileName = 'temp.txt'
+
+    
+    ReadFile(path, fileName)
+    
+    DeleteFile(path, fileName)
+
+    return 1
 
 # This function reads from file
 def ReadFile(m_path, m_fileName):
@@ -60,29 +120,19 @@ def Error(errTitle, errString):
 
 def AddItem():
 
-    path = './Items/'
-    fileName = str(E_itemname.get()) + '.txt'
+    
 
     itemName = str(E_itemname.get())
     amount = str(E_amount.get())
     price = str(E_price.get())
 
-    newData = itemName + ',' + price + ',' + amount
+    newData = itemName + ';' + price + ';' + amount
 
-    try:
-        CreateFile(path, fileName)
+    AskServer('AddItem/' + newData)
 
-        WriteFile(path, fileName, newData)
-
-        logInfo = 'Item created: ' + newData
-
-        LOG(logInfo)
-
-    except:
-        Error('Unsuccessfull Action', 'Couldn\'t create an item...')
 
         
-
+GetTempData()
 
 main = tkinter.Tk()
 main.title('Add Item')

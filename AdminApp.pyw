@@ -99,15 +99,23 @@ def OpenUserList():
     Open('./Userlist.pyw')
 
 def OpenItemList():
+
+    CreateTempData('Admin')
     Open('./ItemList.pyw')
 
 def OpenRequestList():
+
+    CreateTempData('Admin')
     Open('./RequestList.pyw')
 
 def OpenApplicationList():
+
+    CreateTempData('Admin')
     Open('./ApplicationList.pyw')
 
 def OpenWishList():
+
+    CreateTempData('Admin')
     Open('./WishList.pyw')
     
 

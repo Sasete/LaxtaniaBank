@@ -5,9 +5,75 @@ from PIL import ImageTk, Image
 import os
 import sys
 from datetime import datetime
+import socket
 
 
 
+
+host = "laxtaniabank.ddns.net"
+port = 7676
+
+
+bufferSize = 1024
+
+
+
+def Error(errTitle, errString):
+    messagebox.showerror(errTitle, errString)
+
+
+def Info(errTitle, errString):
+    messagebox.showinfo(errTitle, errString)
+
+    
+def AskServer(data):
+
+    message = data
+    
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        s.connect((host,port))
+    
+        s.send( bytes(message, "utf-8") )
+
+
+
+        message = s.recv(bufferSize)
+
+
+
+        reply = format(message).split('\'')[1]
+
+
+    
+        print(reply)
+    
+        return reply
+
+    except:
+        return Error('Error Occured', 'Unkown error occured...')
+
+
+def CreateTempData(data):
+    
+    CreateFile('./','temp.txt')
+        
+    WriteFile('./','temp.txt', data)
+
+
+def GetTempData():
+
+    path = './'
+
+    fileName = 'temp.txt'
+
+
+    ReadFile(path, fileName)
+    
+    DeleteFile(path, fileName)
+
+    return 1
 
 def Open(path):
     Popen('Python ' + path, shell = True)
@@ -63,14 +129,17 @@ def CreateTempData(data):
 
 def Details():
 
-    path = './Items/'
+
+    CreateTempData('Admin')
+    
+    path = 'Items'
 
     
     
-    fileName = str(itemList.get(tkinter.ACTIVE)).split(' ')[2] + '.txt'
+    fileName = str(itemList.get(tkinter.ACTIVE)).split(' ')[2]
 
 
-    newInfo = ReadFile(path, fileName)
+    newInfo = AskServer('Details/' + path + ',' + fileName)
 
     
     CreateTempData(newInfo)
@@ -89,48 +158,36 @@ def LOG(m_input):
 
 def AddItem():
 
+    CreateTempData('Admin')
+
     Open('./AddItem.pyw')
     
 
 def DeleteItem():
 
-    path = './Items/'
-    
-    fileName = str(itemList.get(tkinter.ACTIVE)).split(' ')[2] + '.txt'
 
-    DeleteFile(path, fileName)
+    fileName = str(itemList.get(tkinter.ACTIVE)).split(' ')[2]
+
+    AskServer('DeleteItem/' + fileName)
 
     UpdateItemList()
 
-    logInfo = 'Item removed! ' + fileName
-
-    LOG(logInfo)
 
     
     
 
 def UpdateItemList():
     
-    path = './Items/'
-
-    files = []
-
+    items = str(AskServer('AskItems/')).split(';')
     
-
-    for r,d,f in os.walk(path):
-        for file in f:
-            if '.txt' in file:
-                files.append(os.path.join(r, file))
-
+    
 
     itemList.delete(0, tkinter.END)
                 
     order = 1
-    for file in files:
+    for item in items:
 
-        fileName = str(file).split('.')[1].split('/')[2] + '.txt'
-
-        ItemInfos = ReadFile(path, fileName).split(',')
+        ItemInfos = item.split(',')
 
         itemData = {}
 
@@ -145,7 +202,7 @@ def UpdateItemList():
         order += 1
         
 
-
+GetTempData()
         
 main = tkinter.Tk()
 main.title("Item List")
