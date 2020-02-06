@@ -184,6 +184,8 @@ def Confirm():
         Error(message[0], message[1])
 
         return 0
+
+    UpdateRequestList()
     
 
 def Reject():
