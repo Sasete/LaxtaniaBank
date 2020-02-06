@@ -228,7 +228,7 @@ def UpdateApplicationList():
         
 
 
-#GetTempData()
+GetTempData()
 
        
 main = tkinter.Tk()
