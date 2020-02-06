@@ -1,1 +1,1 @@
-MedicinalPowderx10,5,1180
+MedicinalPowderx10,5,0

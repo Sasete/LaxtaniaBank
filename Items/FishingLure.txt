@@ -1,1 +1,1 @@
-FishingLure,40,70
+FishingLure,40,58

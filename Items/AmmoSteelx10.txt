@@ -1,1 +1,1 @@
-AmmoSteelx10,3,30
+AmmoSteelx10,3,0

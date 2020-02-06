@@ -27,8 +27,10 @@ def OpenCargoShipTracker():
     OpenURL(urlCargoShip)
 
 
+
 def Open(path):
     Popen('py ' + path, shell = True)
+
     
 
 # This function reads from file
@@ -98,6 +100,7 @@ def GetTempDataUser():
 user_info = GetTempDataUser()
 
 
+
 def AskUserInfo(m_username):
 
     message = 'UserInfo/' + str(m_username)
@@ -142,6 +145,7 @@ def OpenCredit():
     CreateTempData(data)
     
     Open('./Credit.pyw')
+    
 
 def OpenMarket():
     
@@ -160,6 +164,23 @@ def OpenUsers():
     CreateTempData(data)
 
     Open('./Users.pyw')
+
+def CreateUserData():
+
+    data = user_info["Username"] + ',' +  user_info["Password"] + ',' + user_info["Email"] + ',' + user_info["GM"] + ',' + user_info["Rank"] + ',' + user_info["Balance"]
+
+    CreateTempData(data)
+
+
+
+def OpenAdminApp():
+    if(int(user_info["Rank"]) >= 100000):
+        Open('./AdminApp.pyw')
+        CreateUserData()
+        sys.exit(0)
+    else:
+        return Error('Access Denied', 'Access denied. Not enough Authority...')
+
     
     
 def CreateTempData(data):
@@ -199,6 +220,7 @@ guildMenu = tkinter.Menu(menu, tearoff = 0)
 menu.add_cascade(label = "Guild", menu = guildMenu)
 
 
+
 guildMenu.add_command(label = "Market", command = OpenMarket)
 guildMenu.add_command(label = "Send Laxi\'s", command = OpenUsers)
 guildMenu.add_separator()
@@ -221,6 +243,8 @@ menu.add_cascade(label = "Account", menu = accountMenu)
 
 
 
+accountMenu.add_command(label = "Administrative", command = OpenAdminApp)
+accountMenu.add_separator()
 accountMenu.add_command(label = "Change Username")
 accountMenu.add_command(label = "Change Password")
 accountMenu.add_command(label = "Change E-mail")
