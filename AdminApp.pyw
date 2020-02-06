@@ -94,6 +94,8 @@ def Wait():
 
 
 def OpenUserList():
+
+    CreateTempData('Admin')
     Open('./Userlist.pyw')
 
 def OpenItemList():
