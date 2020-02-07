@@ -1,1 +1,1 @@
-GalleonFragment,150,15
+GalleonFragment,150,8
