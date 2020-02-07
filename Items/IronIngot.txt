@@ -1,1 +1,1 @@
-IronIngot,3,210
+IronIngot,3,135
