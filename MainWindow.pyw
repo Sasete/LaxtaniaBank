@@ -30,8 +30,12 @@ def OpenCargoShipTracker():
 
 def Open(path):
     Popen('py ' + path, shell = True)
-
     
+
+def Exit():
+
+    Open('./Entrance.pyw')
+    sys.exit(0)
 
 # This function reads from file
 def ReadFile(m_path, m_fileName):
@@ -249,7 +253,7 @@ accountMenu.add_command(label = "Change Username")
 accountMenu.add_command(label = "Change Password")
 accountMenu.add_command(label = "Change E-mail")
 accountMenu.add_separator()
-accountMenu.add_command(label = "Delete Account")
+accountMenu.add_command(label = "Log Out", command = Exit)
 
 
 
@@ -261,9 +265,8 @@ menu.add_cascade(label = "System", menu = systemMenu)
 
 systemMenu.add_command(label = "Help")
 systemMenu.add_command(label = "About")
-systemMenu.add_separator()
 #systemMenu.add_checkbutton(label = "Dark Mode", onvalue = 1, offvalue = 0, variable = themeDark)
-systemMenu.add_command(label = "Exit")
+
 
 
 #if(themeDark):

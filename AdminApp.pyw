@@ -49,7 +49,7 @@ def GetGuildGold():
 
     gold = AskServer('AdminGold/')
 
-    return gold
+    return str(int(gold) * 10)
 
 def GetMarketSize():
 
@@ -117,6 +117,16 @@ def OpenWishList():
 
     CreateTempData('Admin')
     Open('./WishList.pyw')
+
+def OpenGold():
+
+    CreateTempData('Admin')
+    Open('./Gold.pyw')
+
+def Exit():
+
+    Open('./Entrance.pyw')
+    sys.exit(0)
     
 
 # This function checks if 2 given input is matches or not
@@ -241,6 +251,8 @@ menu.add_cascade(label = "Manage", menu = manageMenu)
 manageMenu.add_command(label = "Applications", command = OpenApplicationList)
 manageMenu.add_command(label = "Wishes", command = OpenWishList)
 manageMenu.add_command(label = "Requests", command = OpenRequestList)
+manageMenu.add_separator()
+manageMenu.add_command(label = "Edit Gold", command = OpenGold)
 
 
 
@@ -254,7 +266,7 @@ systemMenu.add_command(label = "Help")
 systemMenu.add_command(label = "About")
 systemMenu.add_separator()
 #systemMenu.add_checkbutton(label = "Dark Mode", onvalue = 1, offvalue = 0, variable = themeDark)
-systemMenu.add_command(label = "Exit")
+systemMenu.add_command(label = "Log Out", command = Exit)
 
 
 #if(themeDark):
@@ -324,7 +336,7 @@ midFrame.pack(side = tkinter.TOP, fill = tkinter.X)
 
 
 creditText = 'Total Distributed Laxi : ' + GetTotalCredits() + ' £'
-goldText = 'Guild Gold Depot : ' + GetGuildGold() + 'g'
+goldText = 'Guild Cash Depot : ' + GetGuildGold() + ' £'
 marketText = 'Market size : ' + GetMarketSize() + ' £'
 
 
