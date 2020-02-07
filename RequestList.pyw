@@ -203,7 +203,7 @@ def UpdateRequestList():
     
     requests = AskServer('AskRequests/').split(';')
 
-    if(requests == 'Empty'):
+    if(requests[0] == 'Empty'):
 
         requestList.delete(0 , tkinter.END)
 
