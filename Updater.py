@@ -20,9 +20,18 @@ def Update():
             print(str(f) + ', removed')
             os.remove(f)
 
+    except:
+        print('Couldn\'t find items.')
+        
+
     try:
         
         os.rmdir('./Items')
+
+    except:
+        print('Couldn\'t find items folder.')
+
+    
 
     try:
 
@@ -31,9 +40,16 @@ def Update():
             print(str(f) + ', removed')
             os.remove(f)
 
+    except:
+        print('Couldn\'t find resources.')
+    
+
     try:
 
         os.rmdir('./Resources')
+
+    except:
+        print('Couldn\'t find resources file.')
 
     try:
 
@@ -41,6 +57,10 @@ def Update():
         for f in filelist:
             print(str(f) + ', removed')
             os.remove(f)
+
+
+    except:
+        print('Couldn\'t find any .pyw file.')
         
     try:
 
@@ -48,9 +68,15 @@ def Update():
         
         print('git files removed')
 
+    except:
+        print('Couldn\'t find git files.')
+
     try:
 
         os.remove('./Version.txt')
+
+    except:
+        print('Couldn\'t find version file.')
 
 
     # Clear Uninstall
