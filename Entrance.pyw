@@ -199,20 +199,31 @@ def AskServer(data):
 
 def CheckVersion():
 
-    version = ReadFile('./', 'Version.txt')
+    try:
 
-    serverVersion = AskServer('Version/')
+        version = ReadFile('./', 'Version.txt')
+
+        serverVersion = AskServer('Version/')
 
 
-    if(version < serverVersion):
+        if(version < serverVersion):
+
+            Open('./Updater.py')
+
+            sys.exit(0)
+
+            return
+
+        return
+
+    except:
 
         Open('./Updater.py')
 
         sys.exit(0)
 
         return
-
-    return
+        
 
 
 CheckVersion()
