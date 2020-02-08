@@ -38,6 +38,8 @@ def Update():
 
     os.remove('./.gitignore')
 
+    os.remove('./Version.txt')
+
     print('git files removed')
 
     # Clear Uninstall
@@ -70,11 +72,17 @@ def Update():
     for f in filelist:
         shutil.move(f,'./')
 
+    shutil.move('./LaxtaniaBank-master/Version.txt', './')
+
+    print('version updated...')
+
 
     os.remove('./Updater2.py')
 
     
     shutil.move('./LaxtaniaBank-master/Updater2.py', './')
+
+    
 
     
     print('Apps are updated...')

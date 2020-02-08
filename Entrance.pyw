@@ -150,7 +150,25 @@ def AskServerForUser(m_username, m_password):
         
         
 
+def CheckVersion():
 
+    version = ReadFile('./', 'Version.txt')
+
+    serverVersion = AskServer('Version/')
+
+
+    if(version <= serverVersion):
+
+        Open('./Updater.py')
+
+        sys.exit(0)
+
+        return
+
+    return
+
+
+CheckVersion()
 
         
 main = tkinter.Tk()

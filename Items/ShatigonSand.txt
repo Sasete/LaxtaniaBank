@@ -1,1 +1,1 @@
-ShatigonSand,10,0
+ShatigonSand,10,44
