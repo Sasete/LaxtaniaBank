@@ -8,6 +8,14 @@ import socket
 import time
 
 
+
+host = "laxtaniabank.ddns.net"
+port = 7676
+
+
+bufferSize = 1024
+
+
 def Open(path):
     #Popen('Python ' + path, shell = True)
     Popen('py ' + path, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin=subprocess.PIPE  )
@@ -196,7 +204,7 @@ def CheckVersion():
     serverVersion = AskServer('Version/')
 
 
-    if(version <= serverVersion):
+    if(version < serverVersion):
 
         Open('./Updater.py')
 
@@ -330,12 +338,6 @@ forgetPassButton.pack()
 
 
 
-
-host = "laxtaniabank.ddns.net"
-port = 7676
-
-
-bufferSize = 1024
 
 
 
