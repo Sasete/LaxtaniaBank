@@ -13,34 +13,45 @@ def Update():
     url = 'https://github.com/Sasete/LaxtaniaBank/archive/master.zip'
 
 
+    try:
     
-    
-    filelist = glob.glob(os.path.join('./Items', "*.txt"))
-    for f in filelist:
-        print(str(f) + ', removed')
-        os.remove(f)
+        filelist = glob.glob(os.path.join('./Items', "*.txt"))
+        for f in filelist:
+            print(str(f) + ', removed')
+            os.remove(f)
 
-    os.rmdir('./Items')
-
-
-    filelist = glob.glob(os.path.join('./Resources', "*.png"))
-    for f in filelist:
-        print(str(f) + ', removed')
-        os.remove(f)
-
-    os.rmdir('./Resources')
-
-    filelist = glob.glob(os.path.join('./', "*.pyw"))
-    for f in filelist:
-        print(str(f) + ', removed')
-        os.remove(f)
+    try:
         
+        os.rmdir('./Items')
 
-    os.remove('./.gitignore')
+    try:
 
-    os.remove('./Version.txt')
+        filelist = glob.glob(os.path.join('./Resources', "*.png"))
+        for f in filelist:
+            print(str(f) + ', removed')
+            os.remove(f)
 
-    print('git files removed')
+    try:
+
+        os.rmdir('./Resources')
+
+    try:
+
+        filelist = glob.glob(os.path.join('./', "*.pyw"))
+        for f in filelist:
+            print(str(f) + ', removed')
+            os.remove(f)
+        
+    try:
+
+        os.remove('./.gitignore')
+        
+        print('git files removed')
+
+    try:
+
+        os.remove('./Version.txt')
+
 
     # Clear Uninstall
     
