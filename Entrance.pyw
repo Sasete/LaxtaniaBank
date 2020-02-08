@@ -11,7 +11,19 @@ import time
 def Open(path):
     #Popen('Python ' + path, shell = True)
     Popen('py ' + path, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin=subprocess.PIPE  )
-    
+
+
+# This function reads from file
+def ReadFile(m_path, m_fileName):
+    filePathName = m_path + m_fileName
+
+    m_file = open(filePathName, 'r')
+
+    m_current = m_file.read()
+
+    m_file.close()
+
+    return m_current   
     
 
 def LogIn():
