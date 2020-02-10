@@ -33,6 +33,17 @@ def OpenCommerceMokulu():
 def OpenScheduleMokulu():
     OpenURL('https://archeage.mokulu.io/schedule')
 
+def OpenMountsMokulu():
+    OpenURL('https://archeage.mokulu.io/mounts')
+
+def OpenTaxesMokulu():
+    OpenURL('https://archeage.mokulu.io/taxes')
+
+def OpenThunderMokulu():
+    OpenURL('https://archeage.mokulu.io/thunderstruck')
+
+    
+
 
 
 
@@ -247,6 +258,9 @@ mokuluMenu.add_command(label = "Dailies", command = OpenDailiesMokulu)
 mokuluMenu.add_command(label = "Skills", command = OpenSkillsMokulu)
 mokuluMenu.add_command(label = "Trade Packs", command = OpenCommerceMokulu)
 mokuluMenu.add_command(label = "Schedule", command = OpenScheduleMokulu)
+mokuluMenu.add_command(label = "Mounts", command = OpenMountsMokulu)
+mokuluMenu.add_command(label = "Taxes", command = OpenTaxesMokulu)
+mokuluMenu.add_command(label = "Thunderstruck", command = OpenThunderMokulu)
 
 
 toolsMenu.add_command(label = "Cargo Ship Tracker", command = OpenCargoShipTracker)
