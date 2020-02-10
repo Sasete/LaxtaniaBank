@@ -10,21 +10,29 @@ import webbrowser
 
 
 
-urlCommerce = 'https://archeage.mokulu.io/trade-packs'
-urlItemBuilder = 'https://archeagecalculator.com/#'
-urlCargoShip = 'http://aau-cargo.com/Halnaak/actual'
-
 def OpenURL(url):
     webbrowser.open(url, new=2)
 
-def OpenCommerce():
-    OpenURL(urlCommerce)
-
 def OpenItemBuilder():
-    OpenURL(urlItemBuilder)
+    OpenURL('https://archeagecalculator.com/#')
 
 def OpenCargoShipTracker():
-    OpenURL(urlCargoShip)
+    OpenURL('http://aau-cargo.com/Halnaak/actual')
+
+    
+
+def OpenDailiesMokulu():
+    OpenURL('https://archeage.mokulu.io/dailies')
+
+def OpenSkillsMokulu():
+    OpenURL('https://archeage.mokulu.io/skills')
+    
+def OpenCommerceMokulu():
+    OpenURL('https://archeage.mokulu.io/trade-packs')
+
+def OpenScheduleMokulu():
+    OpenURL('https://archeage.mokulu.io/schedule')
+
 
 
 
@@ -234,12 +242,18 @@ guildMenu.add_command(label = "Buy/Sell Laxi", command = OpenCredit)
 toolsMenu = tkinter.Menu(menu, tearoff = 0)
 menu.add_cascade(label = "Tools", menu = toolsMenu)
 
+mokuluMenu = tkinter.Menu(toolsMenu, tearoff = 0)
+mokuluMenu.add_command(label = "Dailies", command = OpenDailiesMokulu)
+mokuluMenu.add_command(label = "Skills", command = OpenSkillsMokulu)
+mokuluMenu.add_command(label = "Trade Packs", command = OpenCommerceMokulu)
+mokuluMenu.add_command(label = "Schedule", command = OpenScheduleMokulu)
 
-toolsMenu.add_command(label = "Trading Tool", command = OpenCommerce)
+
 toolsMenu.add_command(label = "Cargo Ship Tracker", command = OpenCargoShipTracker)
 toolsMenu.add_command(label = "Treasure Hunt Helper")
-toolsMenu.add_separator()
 toolsMenu.add_command(label = "Gear Builder", command = OpenItemBuilder)
+toolsMenu.add_separator()
+toolsMenu.add_cascade(label = "Mokulu Tools", menu = mokuluMenu)
 
 
 accountMenu = tkinter.Menu(menu, tearoff = 0)
