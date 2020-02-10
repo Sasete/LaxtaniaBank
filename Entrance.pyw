@@ -20,6 +20,9 @@ def Open(path):
     #Popen('Python ' + path, shell = True)
     Popen('py ' + path, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin=subprocess.PIPE  )
 
+def OpenWithCMD(path):
+    Popen('py ' + path, shell = False, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin=subprocess.PIPE  )
+
 
 # This function reads from file
 def ReadFile(m_path, m_fileName):
@@ -208,7 +211,7 @@ def CheckVersion():
 
         if(version < serverVersion):
 
-            Open('./Updater.py')
+            OpenWithCMD('./Updater.py')
 
             sys.exit(0)
 
@@ -218,7 +221,7 @@ def CheckVersion():
 
     except:
 
-        Open('./Updater.py')
+        OpenWithCMD('./Updater.py')
 
         sys.exit(0)
 
