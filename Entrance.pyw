@@ -21,7 +21,7 @@ def Open(path):
     Popen('py ' + path, shell = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin=subprocess.PIPE  )
 
 def OpenWithCMD(path):
-    Popen('py ' + path, shell = False, stdout = subprocess.PIPE, stderr = subprocess.PIPE, stdin=subprocess.PIPE  )
+    Popen('py ' + path)
 
 
 # This function reads from file
