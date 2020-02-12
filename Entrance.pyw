@@ -203,7 +203,13 @@ def CheckVersion():
 
         version = ReadFile('./', 'Version.txt')
 
-        serverVersion = AskServer('Version/')
+        try:
+
+            serverVersion = AskServer('Version/')
+
+        except:
+
+            Info('Server Down', 'Server is not listening right now. Please try again later...')
 
 
         if(version < serverVersion):
