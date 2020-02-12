@@ -140,7 +140,7 @@ def AskUserInfo(m_username):
         return reply
 
     except:
-        return Error('Error Occured', 'Unkown error occured...')
+        return Error('Connection Error', 'Connection error occured...')
 
 def AskServerForUser(m_username, m_password):
 
@@ -203,13 +203,20 @@ def CheckVersion():
 
         version = ReadFile('./', 'Version.txt')
 
-        try:
+    except:
 
-            serverVersion = AskServer('Version/')
+        Open('./Updater.py')
 
-        except:
+        Info('Updating', 'Seems like your application stayed a bit old. Updating it now. Please wait a while and try again...')
 
-            Info('Server Down', 'Server is not listening right now. Please try again later...')
+
+        sys.exit(0)
+
+        return
+
+    try:
+
+        serverVersion = AskServer('Version/')
 
 
         if(version < serverVersion):
@@ -226,14 +233,13 @@ def CheckVersion():
 
     except:
 
-        Open('./Updater.py')
-
-        Info('Updating', 'Seems like your application stayed a bit old. Updating it now. Please wait a while and try again...')
-
+        Info('Servers Down', 'Seems like servers are not listening currently. Please try again later...')
 
         sys.exit(0)
 
         return
+
+    
         
 
 
