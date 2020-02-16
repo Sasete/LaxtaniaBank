@@ -1,1 +1,1 @@
-ShipRegradeScroll,150,2
+ShipRegradeScroll,150,0

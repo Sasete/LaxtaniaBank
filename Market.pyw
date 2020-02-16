@@ -136,6 +136,26 @@ def SellItem():
     Info('Success', 'Your request successfully sent to server. Please send player \'Laxtania\' these materials; ' + E_amount.get() + 'x' + itemName + ' to get your request accepted.')
 
 
+def SellItemNA():
+
+
+    if(int(E_amount.get()) <= 0):
+        return Error('Error', 'Amount can\'t be 0.')
+    
+    data = 'SellItemNA/' + userData["Username"] + ',' + str(itemList.get(tkinter.ACTIVE)).split(' ')[2] + ',' + E_amount.get()
+
+    # Get Item Name
+
+    itemName = str(itemList.get(tkinter.ACTIVE)).split(' ')[2]
+
+    print(data)
+    AskServer(data)
+
+    Info('Success', 'Your request successfully sent to server. Please send player \'Laxtania\' these materials; ' + E_amount.get() + 'x' + itemName + ' to get your request accepted.')
+
+    
+
+
 def BuyItem():
 
     if(int(E_amount.get()) <= 0):
@@ -312,8 +332,13 @@ EntryField = tkinter.Entry(midFrame, bg = themeColor, fg = userColor, font = 24,
 EntryField.pack(side = tkinter.TOP)
 
 
+sellNAButton = tkinter.Button(midFrame, bg = themeColor, fg = systemColor, text = "Sell NA", font = 24, width = 10, height = 2, command = SellItemNA)
+sellNAButton.pack(side = tkinter.BOTTOM)
+
+
 sellButton = tkinter.Button(midFrame, bg = themeColor, fg = systemColor, text = "Sell", font = 24, width = 10, height = 2, command = SellItem)
 sellButton.pack(side = tkinter.BOTTOM)
+
 
 def selltkinter(event):
     SellItem()

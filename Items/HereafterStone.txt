@@ -1,1 +1,1 @@
-HereafterStone,5,0
+HereafterStone,5,1000

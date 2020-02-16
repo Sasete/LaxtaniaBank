@@ -1,1 +1,1 @@
-IronIngot,3,35
+IronIngot,3,0
