@@ -7,6 +7,56 @@ import sys
 import socket
 import time
 import webbrowser
+import socket
+
+
+
+
+host = "laxtaniabank.ddns.net"
+port = 7676
+
+
+bufferSize = 1024
+
+
+
+def Error(errTitle, errString):
+    messagebox.showerror(errTitle, errString)
+
+
+def Info(errTitle, errString):
+    messagebox.showinfo(errTitle, errString)
+
+    
+def AskServer(data):
+
+    message = data
+    
+    try:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+        s.connect((host,port))
+    
+        s.send( bytes(message, "utf-8") )
+
+
+
+        message = s.recv(bufferSize)
+
+
+
+        reply = format(message).split('\'')[1]
+
+
+    
+        print(reply)
+    
+        return reply
+
+    except:
+        return Error('Error Occured', 'Unkown error occured...')
+
+
 
 
 
@@ -213,6 +263,21 @@ def CreateTempData(data):
     WriteFile('./','temp.txt', data)
     
 
+def AskRValue():
+
+    value = AskServer('RealValue/')
+
+
+    return value
+
+
+
+def AskValue():
+
+    value = AskServer('ImageValue/')
+
+    return value
+
 
 def CalculateRank(rank):
 
@@ -366,6 +431,8 @@ midFrame.pack(side = tkinter.TOP, fill = tkinter.X)
 username = user_info["Username"]
 rank = CalculateRank(int(user_info["Rank"])) + '( ' + user_info["Rank"] + ' points )'
 balance = user_info["Balance"] + ' £'
+rValue = '£ Real Value: ' + str(float("{:.2f}".format(float(AskRValue())))) + 'g'
+iValue = '£ Image Value: ' + str(float("{:.2f}".format(float(AskValue())))) + 'g'
 
 
 usernameLabel = tkinter.Label(top_sideFrame, bg = themeColor, fg = "black", font = 24, text = username)
@@ -373,6 +440,12 @@ usernameLabel.pack()
 
 rankLabel = tkinter.Label(midFrame, bg = themeColor, fg = "black", font = 18, text = rank)
 rankLabel.pack()
+
+rvalueLabel = tkinter.Label(bot_sideFrame, bg = themeColor, fg = "black", font = 18, text = rValue)
+rvalueLabel.pack()
+
+valueLabel = tkinter.Label(bot_sideFrame, bg = themeColor, fg = "black", font = 18, text = iValue)
+valueLabel.pack()
 
 balanceLabel = tkinter.Label(bot_sideFrame, bg = themeColor, fg = "black", font = 18, text = balance)
 balanceLabel.pack()
