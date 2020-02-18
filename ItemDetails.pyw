@@ -118,6 +118,7 @@ def GetTempData():
 
     return temp_info
 
+
 def SetPrice():
 
     path = 'Items'
@@ -130,6 +131,7 @@ def SetPrice():
     
     AskServer('WriteFile/' + path + ';' + fileName + ';' + newInfo)
 
+    UpdatePage(itemData["ItemName"])
     
 
 def SetAmount():
@@ -144,7 +146,39 @@ def SetAmount():
     
     AskServer('WriteFile/' + path + ';' + fileName + ';' + newInfo)
 
+    UpdatePage(itemData["ItemName"])
     
+
+def GetItemData(itemName):
+
+    iteminfo = AskServer('Details/Items,' + itemName)
+
+
+    newData =iteminfo.split(',')
+        
+    temp_info = {}
+
+    temp_info["ItemName"] = newData[0]
+    temp_info["Price"] = newData[1]
+    temp_info["Amount"] = newData[2]
+
+    return temp_info
+
+    
+
+
+def UpdatePage(itemName):
+    
+    item_data = GetItemData(itemName)
+
+    ItemNameText = 'Item Name : ' + item_data["ItemName"]
+    PriceText = 'Price : ' + item_data["Price"]  + ' £'
+    AmountText = 'Amount : ' + item_data["Amount"]
+
+
+    itemnameLabel.config(text = ItemNameText)
+    priceLabel.config(text = PriceText)
+    amountLabel.config(text = AmountText)
 
 
 

@@ -100,14 +100,25 @@ def SetGold():
 
     AskServer('SetGold/' + str(int(EntryField.get())) + ',' + log.get())
     
-    sys.exit(0)
+    UpdatePage()
 
 
 def AddGold():
 
     AskServer('AddGold/' + str(int(EntryField.get())) + ',' + log.get())
 
-    sys.exit(0)
+    UpdatePage()
+    
+
+
+def UpdatePage():
+
+    cashText = 'Guild Gold Depot : ' + GetGuildGold() + 'g'
+
+    cashLabel.config(text = cashText)
+
+    
+    
 
 GetTempData()
 

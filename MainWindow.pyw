@@ -201,14 +201,38 @@ def AskUserInfo(m_username):
 
 
 def UpdatePage():
+
+
+    username = user_info["Username"]
+    rank = CalculateRank(int(user_info["Rank"])) + '( ' + user_info["Rank"] + ' points )'
+    balance = GetUserGold(user_info["Username"]) + ' £'
+    rValue = '£ Real Value: ' + str(float("{:.2f}".format(float(AskRValue())))) + 'g'
+    iValue = '£ Image Value: ' + str(float("{:.2f}".format(float(AskValue())))) + 'g'
+
+
+    usernameLabel.config(text = username)
+    rankLabel.config(text = rank)
+    balanceLabel.config(text = balance)
+    valueLabel.config(text = iValue)
+    rvalueLabel.config(text = rValue)
     
-    Open('./MainWindow.pyw')
 
-    newData = AskUserInfo(user_info["Username"])
+def GetUserGold(m_username):
 
-    CreateTempData(newData)
-        
-    sys.exit(0)
+    userInfo = AskUserInfo(str(m_username))
+
+    newData = userInfo.split(',')
+
+    temp_info = {}
+
+    temp_info["Username"] = newData[0]
+    temp_info["Password"] = newData[1]
+    temp_info["Email"] = newData[2]
+    temp_info["GM"] = newData[3]
+    temp_info["Rank"] = newData[4]
+    temp_info["Balance"] = newData[5]
+
+    return temp_info["Balance"]
 
 
 def OpenCredit():
@@ -294,6 +318,36 @@ def CalculateRank(rank):
         return 'Leader'
     
 
+def ChangeUsername():
+
+
+    CreateTempData('Username,' + user_info["Username"] + ',' + str(os.getpid()))
+
+    Open('./Change.pyw')
+
+    return
+
+
+def ChangePassword():
+
+
+    CreateTempData('Password,' + user_info["Password"] + ',' + str(os.getpid()))
+
+    Open('./Change.pyw')
+    
+
+    return
+
+
+def ChangeEmail():
+
+    CreateTempData('Email,' + user_info["Email"] + ',' + str(os.getpid()))
+
+    Open('./Change.pyw')
+    
+
+    return
+
 
         
 main = tkinter.Tk()
@@ -342,9 +396,9 @@ menu.add_cascade(label = "Account", menu = accountMenu)
 
 accountMenu.add_command(label = "Administrative", command = OpenAdminApp)
 accountMenu.add_separator()
-accountMenu.add_command(label = "Change Username")
-accountMenu.add_command(label = "Change Password")
-accountMenu.add_command(label = "Change E-mail")
+accountMenu.add_command(label = "Change Username", command = ChangeUsername)
+accountMenu.add_command(label = "Change Password", command = ChangePassword)
+accountMenu.add_command(label = "Change E-mail", command = ChangeEmail)
 accountMenu.add_separator()
 accountMenu.add_command(label = "Log Out", command = Exit)
 
@@ -353,12 +407,6 @@ accountMenu.add_command(label = "Log Out", command = Exit)
 #themeDark = tkinter.BooleanVar()
 #themeDark.set(True)
 
-systemMenu = tkinter.Menu(menu, tearoff = 0)
-menu.add_cascade(label = "System", menu = systemMenu)
-
-systemMenu.add_command(label = "Help")
-systemMenu.add_command(label = "About")
-#systemMenu.add_checkbutton(label = "Dark Mode", onvalue = 1, offvalue = 0, variable = themeDark)
 
 
 
@@ -430,7 +478,7 @@ midFrame.pack(side = tkinter.TOP, fill = tkinter.X)
 
 username = user_info["Username"]
 rank = CalculateRank(int(user_info["Rank"])) + '( ' + user_info["Rank"] + ' points )'
-balance = user_info["Balance"] + ' £'
+balance = GetUserGold(user_info["Username"]) + ' £'
 rValue = '£ Real Value: ' + str(float("{:.2f}".format(float(AskRValue())))) + 'g'
 iValue = '£ Image Value: ' + str(float("{:.2f}".format(float(AskValue())))) + 'g'
 

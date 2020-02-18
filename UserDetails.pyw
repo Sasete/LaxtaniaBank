@@ -18,10 +18,6 @@ bufferSize = 1024
 
 
 
-def Error(errTitle, errString):
-    messagebox.showerror(errTitle, errString)
-
-
 def Info(errTitle, errString):
     messagebox.showinfo(errTitle, errString)
 
@@ -124,6 +120,9 @@ def SetRank():
 
     AskServer('SetRank/' + userData["Username"] + ';' + newInfo + ';' + logInfo)
 
+    UpdatePage(userData["Username"])
+    
+
 def SetBalance():
     
     newBalance = str(EntryField.get())
@@ -134,6 +133,40 @@ def SetBalance():
     
     AskServer('SetBalance/' + userData["Username"] + ';' + newInfo + ';' +logInfo)
 
+    UpdatePage(userData["Username"])
+    
+
+def GetUserData(username):
+
+    userInfo = AskServer('UserInfo/' + username)
+
+    newData = userInfo.split(',')
+
+    temp_info = {}
+
+    temp_info["Username"] = newData[0]
+    temp_info["Password"] = newData[1]
+    temp_info["Email"] = newData[2]
+    temp_info["GM"] = newData[3]
+    temp_info["Rank"] = newData[4]
+    temp_info["Balance"] = newData[5]
+
+    return temp_info
+    
+
+
+def UpdatePage(username):
+
+    user_data = GetUserData(username)
+
+    usernameText = 'Username : ' + user_data["Username"]
+    RankText = 'Rank : ' + user_data["Rank"]
+    BalanceText = 'Balance : ' + user_data["Balance"] + ' £'
+
+
+    usernameLabel.config(text = usernameText)
+    rankLabel.config(text = RankText)
+    balanceLabel.config(text = BalanceText)
 
 
 
@@ -173,7 +206,7 @@ balanceLabel = tkinter.Label(topFrame, bg = themeColor, font = 24, fg = systemCo
 balanceLabel.pack()
 
 
-EntryField = tkinter.Entry(mainFrame, bg = themeColor, font = 18, fg = userColor)
+EntryField = tkinter.Entry(mainFrame, bg = themeColor, font = 18, fg = userColor, justify = tkinter.CENTER)
 EntryField.pack()
 
 RankButton = tkinter.Button(mainFrame, bg = themeColor, font = 24, fg = systemColor, text = 'Set Rank', command = SetRank)

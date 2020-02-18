@@ -142,11 +142,15 @@ def doesMatch(str1, str2):
 
 def UpdatePage():
 
-    Open('./AdminApp.pyw')
-    
-    CreateUserData()
+    creditText = 'Total Distributed Laxi : ' + GetTotalCredits() + ' £'
+    goldText = 'Guild Cash Depot : ' + GetGuildGold() + ' £'
+    marketText = 'Market size : ' + GetMarketSize() + ' £'
 
-    sys.exit(0)
+
+    creditLabel.config(text = creditText)
+    goldLabel.config(text = goldText)
+    marketLabel.config(text = marketText)
+
 
 
 
@@ -262,9 +266,7 @@ manageMenu.add_command(label = "Edit Gold", command = OpenGold)
 systemMenu = tkinter.Menu(menu, tearoff = 0)
 menu.add_cascade(label = "System", menu = systemMenu)
 
-systemMenu.add_command(label = "Help")
-systemMenu.add_command(label = "About")
-systemMenu.add_separator()
+
 #systemMenu.add_checkbutton(label = "Dark Mode", onvalue = 1, offvalue = 0, variable = themeDark)
 systemMenu.add_command(label = "Log Out", command = Exit)
 
