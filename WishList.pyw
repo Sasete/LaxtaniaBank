@@ -172,6 +172,8 @@ def Confirm():
         message = response.split(',')
 
         Error(message[0], message[1])
+        
+        UpdateWishList()
 
         return 0
 
