@@ -119,7 +119,16 @@ def Update():
     
     shutil.move('./LaxtaniaBank-master/Updater2.py', './')
 
-    
+
+    try:
+
+        shutil.move('./LaxtaniaBank-master/Laxtania.exe.lnk', './')
+
+    except:
+
+        print('Shortcut is exist.')
+
+        
 
     
     print('Apps are updated...')
